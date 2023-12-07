@@ -24,3 +24,6 @@ eureka:
   instance:
     prefer-ip-address: true
     instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+
+server:
+  port: 1000
