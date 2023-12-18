@@ -39,6 +39,7 @@ public class MemberService {
     private final StringRedisTemplate redisTemplate;
     private final KafkaProducer kafkaProducer;
 
+
     @Transactional
     public void saveMember(SignupRequest request){
             String encodePassword = passwordEncoder.encode(request.getPassword());
@@ -52,9 +53,11 @@ public class MemberService {
                     .year(member.getYear())
                     .studentNumber(member.getStudentNumber())
                     .status(String.valueOf(member.getStatus()))
-                    .role(String.valueOf(member.getStatus()))
+                    .role(String.valueOf(member.getRole()))
+                    .majorList(String.join(",", member.getMajorNames()))
                     .kafkaAction(KafkaAction.CREATE)
                     .build();
+
             kafkaProducer.signup("member",kafkaMember);
     }
 

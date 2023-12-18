@@ -1,9 +1,12 @@
 package com.lms.authserver.global.kafka;
 
+import com.lms.authserver.major.entity.Major;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Builder
 @Getter
@@ -18,5 +21,6 @@ public class KafkaMember {
     private Integer studentNumber;
     private String status;
     private String role;
+    private String majorList;
     private KafkaAction kafkaAction;
 }
