@@ -1,14 +1,14 @@
 
 ### 회원가입
-POST http://localhost:1000/api/v1/member/signup
+POST http://localhost:8000/api/v1/member/signup
 Content-Type: application/json
 
 {
-  "password" : "161611445wefe371",
+  "email" : "asdf",
+  "password" : "1234",
   "name" : "k224i33",
   "status" : "NORMAL",
   "role" : "PROFESSOR",
-  "email" : "77@naver.com",
   "phNumber" : "d1656123551",
   "verificationNumber" : "1648"
 }
@@ -25,8 +25,8 @@ POST http://localhost:8000/api/v1/member/login
 Content-Type: application/json
 
 {
-  "email" : "77@naver.com",
-  "password" : "161611445wefe371"
+  "email" : "asdf",
+  "password" : "1234"
 }
 
 ### AccessToken 재발급
