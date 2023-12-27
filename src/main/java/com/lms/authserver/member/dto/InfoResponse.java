@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class InfoResponse {
     private String id;
     private String role;
+    private String name;
 }

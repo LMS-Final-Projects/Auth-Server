@@ -1,5 +1,5 @@
 package com.lms.authserver.global.kafka;
-
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,15 +9,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class KafkaMember {
+public class KafkaMajor {
+
     private String id;
-    private String email;
-    private String name;
-    private String phNumber;
-    private Integer year;
-    private Integer studentNumber;
-    private String status;
-    private String role;
-    private String majorList;
+    private String memberId;
+    private String checkMajor;
+    private String majorName;
     private KafkaAction kafkaAction;
+    private String role;;
 }
+

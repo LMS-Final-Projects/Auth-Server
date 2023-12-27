@@ -1,14 +1,21 @@
-INSERT INTO major (check_major, major_name, lecture_id)
-VALUES (true, 'Computer Science', '1');
+INSERT INTO major (check_major, major_name)
+VALUES (true, 'Computer Science');
 
-INSERT INTO major (check_major, major_name, lecture_id)
-VALUES (true, 'Math', '2');
+INSERT INTO major (check_major, major_name)
+VALUES (true, 'Math');
 
-INSERT INTO major (check_major, major_name, lecture_id)
-VALUES (true, 'Real English', '3');
+INSERT INTO major (check_major, major_name)
+VALUES (true, 'Real English');
 
-INSERT INTO major (check_major, major_name, lecture_id)
-VALUES (true, 'Real Music', '4');
+INSERT INTO major (check_major, major_name)
+VALUES (true, 'Real Music');
 
-INSERT INTO major (check_major, major_name, lecture_id)
-VALUES (true, 'Engineer', '5');
+INSERT INTO major (check_major, major_name)
+VALUES (true, 'Engineer');
+
+##관리자 권한 변경
+
+UPDATE member
+SET role = 'ADMIN'
+WHERE email = 'codhtjd8700@naver.com' AND role = 'STUDENT';
+

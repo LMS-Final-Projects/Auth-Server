@@ -2,9 +2,12 @@ package com.lms.authserver.member.service;
 
 import com.lms.authserver.global.exception.NotFoundException;
 import com.lms.authserver.global.kafka.KafkaAction;
+import com.lms.authserver.global.kafka.KafkaMajor;
 import com.lms.authserver.global.kafka.KafkaMember;
 import com.lms.authserver.global.kafka.KafkaProducer;
 import com.lms.authserver.global.util.JwtUtil;
+import com.lms.authserver.major.entity.Major;
+import com.lms.authserver.major.repository.MajorRepository;
 import com.lms.authserver.member.dto.EmailVerification;
 import com.lms.authserver.member.dto.InfoResponse;
 import com.lms.authserver.member.dto.LoginRequest;
@@ -24,15 +27,19 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository repository;
+    private final MajorRepository majorRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final JavaMailSender javaMailSender;
@@ -41,24 +48,42 @@ public class MemberService {
 
 
     @Transactional
-    public void saveMember(SignupRequest request){
-            String encodePassword = passwordEncoder.encode(request.getPassword());
-            Member member = repository.save(request.toEntity(encodePassword));
+    public void saveMember(SignupRequest request) {
+        String encodePassword = passwordEncoder.encode(request.getPassword());
+        Member member = repository.save(request.toEntity(encodePassword));
 
-            KafkaMember kafkaMember = KafkaMember.builder()
-                    .id(String.valueOf(member.getId()))
-                    .email(member.getEmail())
-                    .name(member.getName())
-                    .phNumber(member.getPhNumber())
-                    .year(member.getYear())
-                    .studentNumber(member.getStudentNumber())
-                    .status(String.valueOf(member.getStatus()))
-                    .role(String.valueOf(member.getRole()))
-                    .majorList(String.join(",", member.getMajorNames()))
-                    .kafkaAction(KafkaAction.CREATE)
-                    .build();
+        List<Major> majors = majorRepository.findByMajorNames(request.getMajorNames());
 
-            kafkaProducer.signup("member",kafkaMember);
+        if (majors.isEmpty()) {
+            throw new NotFoundException("선택한 전공이 없습니다.");
+        }
+
+        List<KafkaMajor> kafkaMajorList = majors.stream()
+                .map(major -> KafkaMajor.builder()
+                        .id(String.valueOf(major.getId()))
+                        .memberId(String.valueOf(member.getId()))
+                        .majorName(major.getMajorName())
+                        .checkMajor(String.valueOf(major.getCheckMajor()))
+                        .kafkaAction(KafkaAction.CREATE)
+                        .role(String.valueOf(member.getRole()))
+                        .build())
+                .collect(Collectors.toList());
+
+        KafkaMember kafkaMember = KafkaMember.builder()
+                .id(String.valueOf(member.getId()))
+                .email(member.getEmail())
+                .name(member.getName())
+                .phNumber(member.getPhNumber())
+                .year(member.getYear())
+                .studentNumber(member.getStudentNumber())
+                .status(String.valueOf(member.getStatus()))
+                .role(String.valueOf(member.getRole()))
+                .majorList(String.join(",", request.getMajorNames()))
+                .kafkaAction(KafkaAction.CREATE)
+                .build();
+
+        kafkaProducer.signup("member", kafkaMember);
+        kafkaProducer.saveMajor("major", kafkaMajorList);
     }
 
     public void login(LoginRequest request, HttpServletResponse response) {
@@ -157,7 +182,10 @@ public class MemberService {
         String token = cookieAccessToken.getValue();
         String id = String.valueOf(jwtUtil.getMemberIdFromToken(token));
         String role = jwtUtil.getRoleFromToken(token);
-        return new InfoResponse(id,role);
+        UUID uuid = UUID.fromString(id);
+        String name = repository.findNameById(uuid);
+        String email = repository.findEmailById(uuid);
+        return new InfoResponse(id,role,name);
     }
 
 }

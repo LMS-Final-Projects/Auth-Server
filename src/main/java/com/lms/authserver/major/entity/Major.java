@@ -1,7 +1,4 @@
 package com.lms.authserver.major.entity;
-
-
-import com.lms.authserver.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,17 +23,12 @@ public class Major {
     @Column(unique = true, nullable = false)
     private String majorName;
 
-    @Column(unique = true, nullable = false)
-    private Long lectureId;
-
-
     @Override
     public String toString() {
         return "Major{" +
                 "id=" + id +
                 ", checkMajor=" + checkMajor +
                 ", majorName='" + majorName + '\'' +
-                ", lectureId=" + lectureId +
                 '}';
     }
 }

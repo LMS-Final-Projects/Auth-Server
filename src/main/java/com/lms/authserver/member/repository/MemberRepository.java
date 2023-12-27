@@ -13,6 +13,8 @@ import java.util.UUID;
 public interface MemberRepository extends JpaRepository<Member, UUID> {
     Optional<Member> findByEmail(String email);
 
-    @Query("select m.email from Member as m where m.id = :memberId")
-    String findUserEmailById(@Param("memberId") UUID memberId);
+    @Query("select m.email from Member as m where m.id = :id")
+    String findEmailById(@Param("id") UUID id);
+    @Query("select m.name from Member as m where m.id = :id")
+    String findNameById(@Param("id") UUID id);
 }

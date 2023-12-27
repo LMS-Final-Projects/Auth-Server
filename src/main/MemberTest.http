@@ -4,13 +4,15 @@ POST http://localhost:1000/api/v1/member/signup
 Content-Type: application/json
 
 {
-  "password" : "161611445wefe371",
-  "name" : "k224i33",
-  "status" : "NORMAL",
-  "role" : "STUDENT",
-  "email" : "77@naver.com",
-  "phNumber" : "d1656123551",
-  "verificationNumber" : "1648"
+  "password": "!qhadl9413",
+  "name": "임영웅",
+  "majorIds": [1,2],
+  "email": "yrias8700@naver.com",
+  "phNumber": "01033097402",
+  "majorNames": ["Computer Science", "Math"],
+  "verificationNumber": "1648",
+  "status": "NORMAL",
+  "role": "STUDENT"
 }
 
 
@@ -24,18 +26,14 @@ Cookie: AccessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkMGUzMTIwZi02Yzc2LTQ1MDgtYWR
 
 ### 로그인
 # @no-cookie-jar
-POST http://localhost:1000/api/v1/member/login
+POST http://localhost:8000/api/v1/member/login
 Content-Type: application/json
 
 {
-  "email" : "77@naver.com",
-  "password" : "161611445wefe371"
+  "email" : "codhtjd8700@naver.com",
+  "password" : "!qhadl94131341"
 }
 
-### 전공 호출
-# @no-cookie-jar
-GET http://localhost:1000/api/v1/major
-Accept: application/json
 
 
 ### AccessToken 재발급
