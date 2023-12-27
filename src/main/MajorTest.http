@@ -1,0 +1,6 @@
+
+### 전공 호출
+# @no-cookie-jar
+GET http://localhost:8000/api/v1/major
+Accept: application/json
+

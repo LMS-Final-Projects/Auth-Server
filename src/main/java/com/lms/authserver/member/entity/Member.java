@@ -1,10 +1,13 @@
 package com.lms.authserver.member.entity;
 
+import com.lms.authserver.major.entity.Major;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -39,5 +42,9 @@ public class Member {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private MemberRole role;
+
+    @ElementCollection
+    @Column(nullable = false)
+    private List<String> majorNames;
 
 }

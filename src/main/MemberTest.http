@@ -4,17 +4,22 @@ POST http://localhost:1000/api/v1/member/signup
 Content-Type: application/json
 
 {
-  "password" : "161611445wefe371",
-  "name" : "k224i33",
-  "status" : "NORMAL",
-  "role" : "PROFESSOR",
-  "email" : "77@naver.com",
-  "phNumber" : "d1656123551",
-  "verificationNumber" : "1648"
+  "password": "!qhadl9413",
+  "name": "임영웅",
+  "majorIds": [1,2],
+  "email": "yrias8700@naver.com",
+  "phNumber": "01033097402",
+  "majorNames": ["Computer Science", "Math"],
+  "verificationNumber": "1648",
+  "status": "NORMAL",
+  "role": "STUDENT"
 }
 
+
+###
+
 ### 권한 확인
-POST http://localhost:8000/api/v1/auth/info
+POST http://localhost:1000/api/v1/member/info
 Content-Type: application/json
 #Authorization: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3NmYwODUyNi0yYWE2LTQ3YTItODY3ZS04MmIxNDA1OTQ5ZjQiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTY5OTYwNzQ0MSwiaWF0IjoxNjk5NjAzODQxfQ.FQR_wiXID_cGtyeqBrpKVlB-i-KBDn4fukn1fGLnBBY
 Cookie: AccessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkMGUzMTIwZi02Yzc2LTQ1MDgtYWRmMi1kYTBlYzc3M2Q4NWQiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTcwMDA5ODc0OCwiaWF0IjoxNzAwMDk1MTQ4fQ.JyCZJFkqI-sN33H79eYzlfGH6y83UHMwP6x3F3fyr6M
@@ -25,18 +30,20 @@ POST http://localhost:8000/api/v1/member/login
 Content-Type: application/json
 
 {
-  "email" : "77@naver.com",
-  "password" : "161611445wefe371"
+  "email" : "codhtjd8700@naver.com",
+  "password" : "!qhadl94131341"
 }
+
+
 
 ### AccessToken 재발급
 # @no-cookie-jar
-GET http://localhost:8080/api/v1/auth/reissue
+GET http://localhost:1000/api/v1/auth/reissue
 Accept: application/json
 Cookie: RefreshToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZWFkYWFkYS02ODJiLTQ5OGUtYjZlOS1kMDZkYWEyMGEyOGQiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTY5OTM0NjA0OCwiaWF0IjoxNjk4NzQxMjQ4fQ.P9F_jBGqOO1MoZ4hszAb9G2Y4mU7Ngb0OZg3yJ9DsmY
 
 ### 이메일 인증
-POST http://localhost:8080/api/v1/auth/send
+POST http://localhost:1000/api/v1/auth/send
 Content-Type: application/json
 
 {
@@ -44,7 +51,7 @@ Content-Type: application/json
 }
 
 ### 이메일 인증 확인
-POST http://localhost:8080/api/v1/auth/check
+POST http://localhost:1000/api/v1/auth/check
 Content-Type: application/json
 
 {
@@ -53,23 +60,23 @@ Content-Type: application/json
 }
 
 ### 테스트
-GET http://localhost:8000/api/v1/test
+GET http://localhost:1000/api/v1/test
 Accept: application/json
 Cookie:  AccessToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiMGMxZDM4NC1kNzk5LTQ2MTAtOWVmNi1iYjNkYjVjMTEzNTgiLCJyb2xlIjoiU1RVREVOVCIsImV4cCI6MTY5ODk4NDI3NSwiaWF0IjoxNjk4OTgwNjc1fQ.mxFl_ktCYOxC-hhKRfBcDqaTqB9m3updpm6LZ_87EUc
 
 ### 암호화
-POST http://localhost:8888/encrypt
+POST http://localhost:1000/encrypt
 Content-Type: text/plain
 
 wfgj vyxo yoyj ekyv
 
 ### 암호화 해독
-POST http://localhost:8888/decrypt
+POST http://localhost:1000/decrypt
 Content-Type: text/plain
 
 cc613fb0a4204e58cb217e30f2cd6835da83b9bb1111e0146eb648d2101892ef584f7e2cad5c8403b5a5329e6befe095fd9ad973ab9e539f72e7fc5fae6a1144ff2caf6dcdf1b51dcf136e7390aa0c85
 
 ### 테스트2
-GET http://localhost:8000/api/v1/test2
+GET http://localhost:1000/api/v1/test2
 Accept: application/json
 
